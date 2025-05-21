@@ -1,0 +1,21 @@
+name: ckb-vm-test-suite
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths: "ckb-vm-test-suite/**"
+  push:
+    branches: [ main ]
+    paths: "ckb-vm-test-suite/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: |
+        cd ckb-vm-test-suite
+        git clone https://github.com/nervosnetwork/ckb-vm
+        cargo build --features=asm --example=ckb_vm_runner --release
+        make
